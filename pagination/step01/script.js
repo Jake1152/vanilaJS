@@ -20,11 +20,14 @@
 // </button>
 // </nav>
 
+const displayItemCount = 10;
+const paginatedList = document.getElementById("paginated-list");
+const listItems = paginatedList.querySelectorAll("li");
 /**
  *  아무 데이터나 추가
  */
 // window.addEventListener("load", () => {
-function setPageNumber(index) {
+const setPageNumber = (index) => {
   const pageNumbers = document.getElementById("pagination-numbers");
   const pageNumberButton = document.createElement("button");
   const contents = index;
@@ -36,12 +39,34 @@ function setPageNumber(index) {
   pageNumbers.append(pageNumberButton);
   // pageNumbers.appendChild(pageNumberButton);
   // });
-}
+};
 
 /**
  * 현재 페이지의 리스트들을 보여준다.
  */
-const setCurrentPageList = () => {};
+const setCurrentPageList = (currentPage, display) => {
+  console.log(`# setCurrentPageList : ${currentPage}`);
+
+  const startItemIndex = (currentPage - 1) * 10;
+  const endItemIndex = startItemIndex + displayItemCount - 1;
+
+  console.log("listItems; : ", listItems);
+  // for (items of listItems) {
+  //   console.log("items : ", items);
+  //   console.log("items.marker : ", items.marker);
+  // }
+
+  listItems.forEach((item, index) => {
+    if (index < startItemIndex || index > endItemIndex)
+      item.classList.add("hidden");
+    // console.log("index : ", index);
+    console.log("items : ", item);
+  });
+
+  console.log(
+    `# startItemIndex : ${startItemIndex}, end_item_index : ${end_item_index} `
+  );
+};
 /**
  * "load" 이벤트를 쓰고 안쓰고의 차이점
  * - "load" 이벤트 등록 없이 쓰면 리소스(스타일,를 다 안가져온 상태에서 코드가 실행될 수 있다.
@@ -62,13 +87,17 @@ const setPageNumberListFirstClass = (start, pageCount) => {
  * 페이지 개수를 가져온다
  */
 window.addEventListener("load", () => {
-  const display = 10;
   const paginatedList = document.getElementById("paginated-list");
   const listItems = paginatedList.querySelectorAll("li");
   const totalCount = listItems.length || 1;
+  let currentPage = 4;
 
-  pageCount = Math.ceil(totalCount / display);
+  pageCount = Math.ceil(totalCount / displayItemCount);
   const start = 1;
+
+  // ## 1
   // setPageNumberList(start, pageCount);
+  // ## 2
   setPageNumberListFirstClass(start, pageCount);
+  setCurrentPageList(currentPage);
 });
