@@ -90,7 +90,7 @@ window.addEventListener("load", () => {
   const paginatedList = document.getElementById("paginated-list");
   const listItems = paginatedList.querySelectorAll("li");
   const totalCount = listItems.length || 1;
-  let currentPage = 4;
+  let currentPage = 1;
 
   pageCount = Math.ceil(totalCount / displayItemCount);
   const start = 1;
