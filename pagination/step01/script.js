@@ -13,6 +13,9 @@ const setPageNumber = (index) => {
   // pageNumberButton
   pageNumberButton.setAttribute("page-index", contents);
   pageNumberButton.setAttribute("aria-label", "Page " + contents);
+  pageNumberButton.addEventListener("click", () => {
+    setCurrentPageItemsList(index);
+  });
   // pageNumberButton.
   // console.log("pageNumbers : ", pageNumbers);
   // pageNumbers.append(pageNumberButton);
@@ -32,37 +35,30 @@ const setCurrentPageItemsList = (currentPage, display) => {
   listItems.forEach((item, index) => {
     if (index < startItemIndex || index > endItemIndex)
       item.classList.add("hidden");
+    else item.classList.remove("hidden");
   });
 
   console.log(
     `# startItemIndex : ${startItemIndex}, endItemIndex : ${endItemIndex} `
   );
 };
-/**
- * "load" 이벤트를 쓰고 안쓰고의 차이점
- * - "load" 이벤트 등록 없이 쓰면 리소스(스타일,를 다 안가져온 상태에서 코드가 실행될 수 있다.
- */
 
-// ## 1
-// function setPageNumberList(start, pageCount) {
-//   for (let pageNumber = start; pageNumber <= pageCount; pageNumber++)
-//     setPageNumber(pageNumber);
-// }
-// ## 2
-const setPaginationNUmbers = () => {
+const setPaginationNumbers = () => {
   const totalCount = listItems.length || 1;
   const pageCount = Math.ceil(totalCount / displayItemCount);
+  // start가 현재 item의 위치에 따라 계산되도록 처리
   const start = 1;
   for (let pageNumber = start; pageNumber <= pageCount; pageNumber++)
     setPageNumber(pageNumber);
 };
 
 /**
- * 페이지 개수를 가져온다
+ * "load" 이벤트를 쓰고 안쓰고의 차이점
+ * - "load" 이벤트 등록 없이 쓰면 리소스(스타일,를 다 안가져온 상태에서 코드가 실행될 수 있다.
  */
 window.addEventListener("load", () => {
   let initPageNumber = 1;
 
-  setPaginationNUmbers();
+  setPaginationNumbers();
   setCurrentPageItemsList(initPageNumber);
 });
